@@ -1,6 +1,15 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
 import Home from '../views/Home.vue'
+import Login from '../views/Login.vue'
+import Signup from '../views/Signup.vue'
+import Tags from '../views/Tags.vue'
+import Tag from '../views/Tag.vue'
+import Profil from '../views/Profil.vue'
+import New from '../views/New.vue'
+import Dashboard from '../views/Dashboard.vue'
+import Settings from '../views/Settings.vue'
+import NotFound from '../views/NotFound.vue'
 
 Vue.use(VueRouter)
 
@@ -11,13 +20,49 @@ const routes = [
     component: Home,
   },
   {
-    path: '/about',
-    name: 'About',
-    // route level code-splitting
-    // this generates a separate chunk (about.[hash].js) for this route
-    // which is lazy-loaded when the route is visited.
-    component: () =>
-      import(/* webpackChunkName: "about" */ '../views/About.vue'),
+    path: '/login',
+    name: 'Login',
+    component: Login,
+  },
+  {
+    path: '/signup',
+    name: 'Signup',
+    component: Signup,
+  },
+  {
+    path: '/tags',
+    name: 'Tags',
+    component: Tags,
+  },
+  {
+    path: '/t/:tagname',
+    name: 'Tag',
+    component: Tag,
+  },
+  {
+    path: '/:username',
+    name: 'Profil',
+    component: Profil,
+  },
+  {
+    path: '/new',
+    name: 'New',
+    component: New,
+  },
+  {
+    path: '/dashboard',
+    name: 'Dashboard',
+    component: Dashboard,
+  },
+  {
+    path: '/settings',
+    name: 'Settings',
+    component: Settings,
+  },
+  {
+    path: '*',
+    name: 'NotFound',
+    component: NotFound,
   },
 ]
 
