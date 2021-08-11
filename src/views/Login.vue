@@ -1,79 +1,118 @@
 <template>
   <div class="h-without-nav pt-36">
-    <div
-      class="
-        flex flex-col
-        gap-3
-        max-w-lg
-        mx-auto
-        px-8
-        py-7
-        rounded
-        bg-gray-50
-        border-2 border-gray-700
-        relative
-        shadow-lg
-      "
-    >
-      <button class="px-9 py-3 bg-gray-900 text-gray-50 rounded">
-        Contenue with github
-      </button>
-      <hr class="w-24 self-center" />
-      <input
+    <ValidationObserver v-slot="{ invalid }">
+      <form
         class="
-          py-2
-          px-3
-          w-full
-          text-sm
-          focus:outline-none
-          focus:border-blue-500
-          focus:shadow-md
-          border-2 border-gray-300
+          relative
+          flex flex-col
+          max-w-lg
+          gap-3
+          px-8
+          mx-auto
+          border-2 border-gray-700
           rounded
-          placeholder-gray-500 placeholder-opacity-75
-          text-gray-900
+          shadow-lg
+          py-7
+          bg-gray-50
         "
-        type="text"
-        placeholder="Email"
-      />
-      <input
-        class="
-          py-2
-          px-3
-          w-full
-          text-sm
-          focus:outline-none
-          focus:border-blue-500
-          focus:shadow-md
-          border-2 border-gray-300
-          rounded
-          placeholder-gray-500 placeholder-opacity-75
-          text-gray-900
-        "
-        type="text"
-        placeholder="Password"
-      />
-      <label for="rememberMe">
-        <input type="checkbox" id="rememberMe" />
-        Remember Me
-      </label>
-
-      <button class="px-9 py-3 bg-blue-500 text-gray-50 rounded">Login</button>
-
-      <router-link
-        class="self-center text-blue-500"
-        :to="{ name: 'ForgetPassword' }"
-        >I forgot my password</router-link
+        @submit.prevent="login"
       >
-    </div>
+        <label class="flex flex-col" for="email">
+          Email
+          <base-input
+            type="text"
+            name="email"
+            id="email"
+            placeholder="john@example.com"
+            v-model="email"
+            rules="required|email"
+          ></base-input>
+        </label>
+
+        <label class="flex flex-col" for="password">
+          Password
+          <base-input
+            type="password"
+            name="password"
+            id="password"
+            placeholder="•••••••"
+            v-model="password"
+            rules="required|min:8"
+          ></base-input>
+        </label>
+
+        <label for="rememberMe">
+          <base-checkbox id="rememberMe" v-model="rememberme" />
+          Remember Me
+        </label>
+
+        <base-button type="submit" :disabled="invalid">Login</base-button>
+
+        <base-anchor class="self-center" :to="{ name: 'ForgetPassword' }"
+          >I forgot my password</base-anchor
+        >
+      </form>
+    </ValidationObserver>
   </div>
 </template>
 <script>
-export default {}
-</script>
+import { ValidationObserver } from 'vee-validate'
+import BaseInput from '../ui/BaseInput.vue'
+import BaseButton from '../ui/BaseButton.vue'
+import BaseCheckbox from '../ui/BaseCheckbox.vue'
+import BaseAnchor from '../ui/BaseAnchor.vue'
 
-<style>
-.h-without-nav {
-  min-height: calc(100vh - 64px);
+export default {
+  name: 'Login',
+  components: {
+    ValidationObserver,
+    BaseInput,
+    BaseButton,
+    BaseCheckbox,
+    BaseAnchor,
+  },
+  data() {
+    return {
+      email: 'abdelhamidaitayoub@gmail.com',
+      password: 'pass1234',
+      rememberme: false,
+    }
+  },
+
+  methods: {
+    login() {
+      this.$store
+        .dispatch('login', {
+          email: this.email,
+          password: this.password,
+        })
+        .then(() => {
+          this.$router.push({ name: 'Home' })
+          this.$notify({
+            group: 'app',
+            type: 'success',
+            title: 'Authentication',
+            text: 'Logged in successfully',
+          })
+        })
+        .catch((err) => {
+          this.$notify({
+            group: 'app',
+            type: 'error',
+            title: 'Authentication',
+            text: err.response.data.message,
+          })
+        })
+    },
+  },
+  metaInfo() {
+    return {
+      title: 'Welcome!',
+      titleTemplate: '%s - CARDINO Community 🎴🎴',
+      htmlAttrs: {
+        lang: 'en',
+      },
+    }
+  },
 }
-</style>
+</script>

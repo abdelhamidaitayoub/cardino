@@ -3,7 +3,17 @@
 </template>
 
 <script>
-export default {}
+export default {
+  metaInfo() {
+    return {
+      title: 'Dashboard',
+      titleTemplate: '%s - CARDINO Community 🎴🎴',
+      htmlAttrs: {
+        lang: 'en',
+      },
+    }
+  },
+}
 </script>
 
 <style></style>

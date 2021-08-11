@@ -1,5 +1,5 @@
 <template>
-  <h1>New</h1>
+  <h1>Contact us</h1>
 </template>
 
 <script>
