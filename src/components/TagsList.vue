@@ -1,6 +1,6 @@
 <template>
   <div class="flex flex-wrap justify-between gap-5">
-    <super-tag v-for="n in 51" :key="n"></super-tag>
+    <super-tag v-for="tag in tags" :key="tag._id" :tag="tag"></super-tag>
   </div>
 </template>
 
@@ -8,6 +8,7 @@
 import SuperTag from '@/components/SuperTag.vue'
 export default {
   name: 'TagsList',
+  props: ['tags'],
   components: {
     SuperTag,
   },

@@ -1,30 +1,24 @@
 <template>
-  <div
-    class="
-      flex-grow-0
-      px-7
-      py-6
-      rounded
-      text-gray-900
-      bg-gray-50
-      border-2 border-gray-700
-      shadow-lg
-      space-y-2
-    "
-    style="flex-basis: 32%"
+  <base-card
+    class="flex-grow-0 px-7 py-6 space-y-2"
+    :style="`flex-basis: 32%; border-top: 20px solid ${tag.bgColor}`"
   >
-    <h2 class="text-xl font-medium">#javasript</h2>
+    <h2 class="text-xl font-medium">#{{ tag.name }}</h2>
     <p>
-      Lorem ipsum dolor sit amet consectetur adipisicing elit. Modi dolorem
-      aliquid natus adipisci inventore voluptatum, pariatur earum delectus dolor
-      voluptatibus alias soluta architecto odit.
+      {{ tag.description }}
     </p>
-    <p class="text-gray-600 text-sm">69,206 posts published</p>
-  </div>
+    <p class="text-gray-600 text-sm">
+      {{ Math.floor(Math.random() * (1000 + 100)) }} posts published
+    </p>
+  </base-card>
 </template>
 
 <script>
+import BaseCard from '../ui/BaseCard.vue'
+
 export default {
-  name: 'Tag',
+  components: { BaseCard },
+  name: 'SuperTag',
+  props: ['tag'],
 }
 </script>

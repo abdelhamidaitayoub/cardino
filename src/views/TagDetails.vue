@@ -2,26 +2,13 @@
   <div class="h-without-nav container mx-auto">
     <base-card
       class="flex mt-7 px-8 py-7 mx-40"
-      style="border-top: 20px solid #000"
+      :style="`border-top: 20px solid ${tag.bgColor || '#000'}`"
     >
       <div class="flex space-x-4">
-        <!-- <img
-          class="w-16 self-start"
-          src="https://res.cloudinary.com/practicaldev/image/fetch/s--e4kQ9nis--/c_limit,f_auto,fl_progressive,q_80,w_64/https://dev-to-uploads.s3.amazonaws.com/uploads/badge/badge_image/16/js-badge.png"
-          alt="badge image"
-        /> -->
-
         <div>
           <h1 class="text-gray-900 font-bold text-2xl mb-4">#{{ tagname }}</h1>
           <p>
-            Lorem ipsum dolor, sit amet consectetur adipisicing elit. Voluptates
-            minus magnam et. Necessitatibus, ad nesciunt? Impedit possimus ipsam
-            iure culpa aliquid. Tempora dicta consequuntur totam fugiat
-            cupiditate doloribus sint porro? Quos expedita nisi cumque
-            exercitationem error nihil iure! Officia quo sapiente perspiciatis
-            quasi praesentium corrupti aspernatur error rerum temporibus vitae
-            consequuntur architecto fugit exercitationem, modi quidem voluptates
-            commodi ullam a.
+            {{ tag.description }}
           </p>
         </div>
       </div>
@@ -59,6 +46,7 @@ export default {
   data() {
     return {
       cards: [],
+      tag: {},
       page: 1,
     }
   },
@@ -82,6 +70,18 @@ export default {
           }
         })
     },
+    async getTag() {
+      const { data } = await api.get('api/v1/tags', {
+        params: {
+          name: this.tagname,
+        },
+      })
+      this.tag = data.data.tags[0]
+    },
+  },
+
+  created() {
+    this.getTag()
   },
 
   metaInfo() {
