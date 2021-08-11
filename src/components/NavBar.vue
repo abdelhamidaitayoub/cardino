@@ -5,7 +5,7 @@
         <div class="flex gap-6">
           <router-link :to="{ name: 'Home' }">
             <svg
-              class="w-11 h-11"
+              class="w-11 h-11 shadow-sm"
               fill="none"
               viewBox="0 0 100 100"
               xmlns="http://www.w3.org/2000/svg"
@@ -61,7 +61,11 @@
             @mouseleave="menuOpen = false"
             @mouseover="menuOpen = true"
           >
-            <img class="w-9" :src="user.photo" alt="avatar image" />
+            <img
+              class="w-9 border-r-2 border-b-2 border-t border-l rounded"
+              :src="user.photo"
+              alt="avatar image"
+            />
             <Menu v-if="menuOpen"></Menu>
           </div>
         </div>
