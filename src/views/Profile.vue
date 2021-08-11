@@ -4,7 +4,7 @@
     <div v-else>
       <div class="h-40 bg-black"></div>
       <div class="container mx-auto">
-        <div
+        <base-card
           class="
             flex flex-col
             items-center
@@ -13,10 +13,6 @@
             mx-52
             px-8
             py-7
-            rounded
-            bg-gray-50
-            border-gray-700 border-2
-            shadow-lg
             relative
           "
         >
@@ -48,7 +44,7 @@
             <p class="text-gray-500">Joined on {{ joinedOn }}</p>
           </div>
           <div
-            class="absolute top-2 right-2"
+            class="absolute top-2 right-4"
             v-if="
               this.$store.state.user && user._id === this.$store.state.user._id
             "
@@ -57,22 +53,9 @@
               <base-button type="button">Edit Profil</base-button>
             </router-link>
           </div>
-        </div>
+        </base-card>
         <div class="flex mx-52 space-x-4 mt-4">
-          <ul
-            class="
-              flex flex-col
-              space-y-3
-              px-3
-              py-4
-              w-1/3
-              self-start
-              rounded
-              bg-gray-50
-              border-gray-700 border-2
-              shadow-lg
-            "
-          >
+          <base-card class="flex flex-col space-y-3 px-3 py-4 w-1/3 self-start">
             <li class="flex">
               <svg
                 xmlns="http://www.w3.org/2000/svg"
@@ -107,7 +90,7 @@
               </svg>
               0 comments written
             </li>
-          </ul>
+          </base-card>
           <main class="self-end space-y-4">
             <Card v-for="card in userCards" :key="card._id" :card="card"></Card>
           </main>
@@ -123,6 +106,7 @@ import Card from '@/components/Card.vue'
 import api from '../store/api'
 import BaseButton from '../ui/BaseButton.vue'
 import moment from 'moment'
+import BaseCard from '../ui/BaseCard.vue'
 // import Footer from '../components/Footer.vue'
 
 export default {
@@ -131,6 +115,7 @@ export default {
     // CardsList,
     Card,
     BaseButton,
+    BaseCard,
     // Footer,
   },
   props: ['username'],
