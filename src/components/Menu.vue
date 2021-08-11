@@ -45,7 +45,8 @@ export default {
 
 <style>
 .menu {
-  @apply z-50 absolute space-y-4 border-2 border-gray-700 rounded bg-gray-50;
+  @apply absolute space-y-4 border-r-4 border-b-4 border-t-2 border-l-2  border-gray-700 rounded bg-gray-50;
+  z-index: 9999;
   min-width: 12rem;
   bottom: -12.5rem;
   left: -10rem;
