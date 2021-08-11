@@ -104,7 +104,7 @@
                       stroke-linejoin="round"
                     />
                   </svg>
-                  <div>Morocco</div>
+                  <div>{{ card.user.location }}</div>
                 </li>
                 <li class="flex items-center space-x-3">
                   <div class="key">
