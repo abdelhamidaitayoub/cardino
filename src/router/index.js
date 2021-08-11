@@ -84,6 +84,7 @@ const routes = [
     path: '/settings',
     name: 'Settings',
     component: Settings,
+    meta: { requiresAuth: true },
     redirect: { name: 'UserProfile' },
     children: [
       { path: '', component: UserProfile },
@@ -91,21 +92,25 @@ const routes = [
         name: 'UserProfile',
         path: 'profile',
         component: UserProfile,
+        meta: { requiresAuth: true },
       },
       {
         name: 'UpdatePassword',
         path: 'updatePassword',
         component: UpdatePassword,
+        meta: { requiresAuth: true },
       },
       {
         name: 'UserWork',
         path: 'work',
         component: UserWork,
+        meta: { requiresAuth: true },
       },
       {
         name: 'UserBasic',
         path: 'basic',
         component: UserBasic,
+        meta: { requiresAuth: true },
       },
     ],
   },
