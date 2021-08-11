@@ -1,21 +1,12 @@
 <template>
-  <div
-    class="
-      flex-grow
-      px-8
-      py-7
-      rounded
-      bg-gray-50
-      border-gray-700 border-2
-      shadow-lg
-    "
-  >
-    UserWork
-  </div>
+  <base-card class="flex-grow px-8 py-7"> UserWork </base-card>
 </template>
 
 <script>
-export default {}
+import BaseCard from '../ui/BaseCard.vue'
+export default {
+  components: { BaseCard },
+}
 </script>
 
 <style></style>

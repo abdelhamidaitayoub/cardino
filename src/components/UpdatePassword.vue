@@ -1,18 +1,8 @@
 <template>
-  <div
-    class="
-      flex-grow
-      px-8
-      py-7
-      rounded
-      bg-gray-50
-      border-gray-700 border-2
-      shadow-lg
-    "
-  >
+  <base-card class="flex-grow px-8 py-7">
     <ValidationObserver v-slot="{ invalid }">
       <form class="flex flex-col space-y-4" @submit.prevent="updatePassword">
-        <h1>Update Password</h1>
+        <h1 class="text-xl font-medium">Update Password</h1>
         <label class="flex flex-col" for="currentPassword">
           Current Password
           <base-input
@@ -51,7 +41,7 @@
         >
       </form>
     </ValidationObserver>
-  </div>
+  </base-card>
 </template>
 
 <script>
@@ -59,11 +49,13 @@ import api from '../store/api'
 import { ValidationObserver } from 'vee-validate'
 import BaseInput from '../ui/BaseInput.vue'
 import BaseButton from '../ui/BaseButton.vue'
+import BaseCard from '../ui/BaseCard.vue'
 export default {
   components: {
     ValidationObserver,
     BaseInput,
     BaseButton,
+    BaseCard,
   },
   data() {
     return {
