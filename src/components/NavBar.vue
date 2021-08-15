@@ -1,5 +1,5 @@
 <template>
-  <nav class="w-100 bg-gray-50">
+  <nav class="w-100 bg-gray-50 sticky top-0" style="z-index: 9999">
     <div class="container mx-auto">
       <div class="flex justify-between py-3 mx-40">
         <div class="flex gap-6">

@@ -6,7 +6,7 @@
       animation-type="velocity"
     ></base-notifications>
     <nav-bar></nav-bar>
-    <router-view></router-view>
+    <router-view :key="$route.fullPath"></router-view>
   </div>
 </template>
 
@@ -22,8 +22,13 @@ export default {
 
   created() {
     const userData = localStorage.user
-    if (userData) {
-      this.$store.commit('SET_USER_DATA', JSON.parse(userData))
+    const token = localStorage.token
+    if (userData && token) {
+      const userObj = {}
+      userObj.token = token
+      userObj.data = {}
+      userObj.data.user = JSON.parse(userData)
+      this.$store.commit('SET_USER_DATA', userObj)
     }
   },
 }

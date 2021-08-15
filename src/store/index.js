@@ -11,7 +11,8 @@ export default new Vuex.Store({
   mutations: {
     SET_USER_DATA(state, userData) {
       state.user = userData.data.user
-      localStorage.setItem('user', JSON.stringify(userData))
+      localStorage.setItem('user', JSON.stringify(userData.data.user))
+      localStorage.setItem('token', userData.token)
       api.defaults.headers.common['Authorization'] = `Bearer ${userData.token}`
     },
     CLEAR_USER_DATA() {
@@ -21,6 +22,7 @@ export default new Vuex.Store({
     },
     RELOAD_USER_DATA(state, userData) {
       state.user = userData.data.user
+      localStorage.setItem('user', JSON.stringify(userData.data.user))
     },
   },
   actions: {
@@ -49,6 +51,10 @@ export default new Vuex.Store({
 
     admin(state) {
       return state.user.role === 'admin'
+    },
+
+    tagModerator(state) {
+      return state.user.role === 'tag-moderator'
     },
 
     user(state) {

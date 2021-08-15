@@ -14,6 +14,7 @@
             py-2
             text-lg text-gray-800
             cursor-pointer
+            rounded-md
           "
           :to="{ name: 'UserProfile' }"
           tag="li"
@@ -28,6 +29,7 @@
             py-2
             text-lg text-gray-800
             cursor-pointer
+            rounded-md
           "
           :to="{ name: 'UpdatePassword' }"
           tag="li"
@@ -42,6 +44,7 @@
             py-2
             text-lg text-gray-800
             cursor-pointer
+            rounded-md
           "
           :to="{ name: 'UserBasic' }"
           tag="li"
@@ -56,6 +59,7 @@
             py-2
             text-lg text-gray-800
             cursor-pointer
+            rounded-md
           "
           :to="{ name: 'UserWork' }"
           tag="li"
@@ -84,6 +88,6 @@ export default {
 
 <style scoped>
 .router-link-active {
-  @apply bg-gray-50;
+  @apply bg-gray-50 text-blue-600;
 }
 </style>

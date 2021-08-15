@@ -267,96 +267,41 @@
       </main>
       <!--  -->
       <div class="mt-16 w-4/12 space-y-4">
-        <div class="flex flex-col bg-white rounded-md shadow-sm">
+        <div
+          v-for="(cards, key) in cards"
+          :key="key"
+          class="flex flex-col bg-white rounded-md shadow-sm"
+        >
           <header class="py-3 px-5">
             <h3 class="text-xl font-medium">
-              <router-link to="/">
-                <span class="text-blue-500">#</span>news</router-link
+              <router-link :to="`/${key}`">
+                <span class="text-blue-500">#</span>{{ key }}</router-link
               >
             </h3>
           </header>
           <hr class="w-full" />
           <ul>
-            <router-link
-              class="py-4 px-5 cursor-pointer hover:bg-gray-50 group"
-              to="/nilanth/redux-toolkit-the-standard-way-to-write-redux-2g32"
-              tag="li"
-            >
-              <span class="font-medium text-gray-800 group-hover:text-blue-500"
-                >Redux Toolkit - The Standard Way to Write Redux</span
+            <div v-for="card in cards" :key="card._id">
+              <router-link
+                class="py-4 px-5 cursor-pointer hover:bg-gray-50 group"
+                :to="`/${card.user.username}/${card.slug}`"
+                tag="li"
               >
-              <div class="flex space-x-2">
-                <span class="text-sm text-gray-500"><span>#</span>react</span>
-                <span class="text-sm text-gray-500"
-                  ><span>#</span>javascript</span
+                <span
+                  class="font-medium text-gray-800 group-hover:text-blue-500"
+                  >{{ card.title }}</span
                 >
-                <span class="text-sm text-gray-500"><span>#</span>webdev</span>
-              </div>
-            </router-link>
-            <hr class="w-full" />
-            <router-link
-              class="py-4 px-5 cursor-pointer hover:bg-gray-50 group"
-              to="/nilanth/redux-toolkit-the-standard-way-to-write-redux-2g32"
-              tag="li"
-            >
-              <span class="font-medium text-gray-800 group-hover:text-blue-500"
-                >Redux Toolkit - The Standard Way to Write Redux</span
-              >
-              <div class="flex space-x-2">
-                <span class="text-sm text-gray-500"><span>#</span>react</span>
-                <span class="text-sm text-gray-500"
-                  ><span>#</span>javascript</span
-                >
-                <span class="text-sm text-gray-500"><span>#</span>webdev</span>
-              </div>
-            </router-link>
-            <hr class="w-full" />
-          </ul>
-        </div>
-        <div class="flex flex-col bg-white rounded-md shadow-sm">
-          <header class="py-3 px-5">
-            <h3 class="text-xl font-medium">
-              <router-link to="/">
-                <span class="text-blue-500">#</span>news</router-link
-              >
-            </h3>
-          </header>
-          <hr class="w-full" />
-          <ul>
-            <router-link
-              class="py-4 px-5 cursor-pointer hover:bg-gray-50 group"
-              to="/nilanth/redux-toolkit-the-standard-way-to-write-redux-2g32"
-              tag="li"
-            >
-              <span class="font-medium text-gray-800 group-hover:text-blue-500"
-                >Redux Toolkit - The Standard Way to Write Redux</span
-              >
-              <div class="flex space-x-2">
-                <span class="text-sm text-gray-500"><span>#</span>react</span>
-                <span class="text-sm text-gray-500"
-                  ><span>#</span>javascript</span
-                >
-                <span class="text-sm text-gray-500"><span>#</span>webdev</span>
-              </div>
-            </router-link>
-            <hr class="w-full" />
-            <router-link
-              class="py-4 px-5 cursor-pointer hover:bg-gray-50 group"
-              to="/nilanth/redux-toolkit-the-standard-way-to-write-redux-2g32"
-              tag="li"
-            >
-              <span class="font-medium text-gray-800 group-hover:text-blue-500"
-                >Redux Toolkit - The Standard Way to Write Redux</span
-              >
-              <div class="flex space-x-2">
-                <span class="text-sm text-gray-500"><span>#</span>react</span>
-                <span class="text-sm text-gray-500"
-                  ><span>#</span>javascript</span
-                >
-                <span class="text-sm text-gray-500"><span>#</span>webdev</span>
-              </div>
-            </router-link>
-            <hr class="w-full" />
+                <div class="flex space-x-2">
+                  <span
+                    v-for="(tag, i) in card.tags"
+                    :key="i"
+                    class="text-sm text-gray-500"
+                    ><span>#</span>{{ tag }}</span
+                  >
+                </div>
+              </router-link>
+              <hr class="w-full" />
+            </div>
           </ul>
         </div>
       </div>
@@ -378,6 +323,7 @@ export default {
   data() {
     return {
       tags: [],
+      cards: {},
     }
   },
 
@@ -386,10 +332,20 @@ export default {
       const { data } = await api.get('api/v1/tags')
       this.tags = data.data.tags
     },
+    async topFiveCardByTag() {
+      const tags = ['news', 'help', 'discuss']
+      const obj = {}
+      for (const tag of tags) {
+        const { data } = await api.get(`api/v1/tags/${tag}/top-5-cards`)
+        obj[tag] = data.data.cards
+      }
+      this.cards = obj
+    },
   },
 
-  created() {
+  mounted() {
     this.getTags()
+    this.topFiveCardByTag()
   },
 
   metaInfo() {

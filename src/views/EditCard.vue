@@ -3,7 +3,27 @@
     <div class="container mx-auto">
       <form class="flex flex-col mx-48">
         <base-card class="space-y-0">
-          <input type="file" name="cover" ref="cover" accept="image/*" />
+          <div
+            class="
+              bg-gray-500
+              h-80
+              cursor-pointer
+              bg-cover bg-no-repeat bg-center
+            "
+            :style="`background-image: linear-gradient(to bottom, rgba(245, 246, 252, 0), rgba(220, 220, 220, 0.73)), url(${
+              this.coverUrl || this.cover
+            })`"
+            @click.prevent="onPickFile"
+          ></div>
+          <input
+            style="display: none"
+            type="file"
+            name="cover"
+            ref="cover"
+            accept="image/*"
+            @change="onFilePicked"
+          />
+
           <input
             class="
               py-4
@@ -54,25 +74,24 @@
             @imgAdd="addImage"
             @imgDel="deleteImage"
             :boxShadow="false"
-            @save="save"
           ></mavon-editor>
         </base-card>
 
         <div class="space-x-2">
           <button
             type="button"
-            @click="createCard(true)"
+            @click="updateCard(true)"
             class="py-2 bg-blue-500 rounded px-8 text-gray-50 self-start mt-4"
           >
-            Publish
+            Save Changes
           </button>
-          <button
+          <!-- <button
             type="button"
-            @click="createCard(false)"
+            @click="updateCard(false)"
             class="py-2 bg-gray-300 rounded px-8 text-gray-700 self-start mt-4"
           >
             Save draft
-          </button>
+          </button> -->
         </div>
       </form>
     </div>
@@ -84,13 +103,17 @@ import api from '../store/api'
 import BaseCard from '../ui/BaseCard.vue'
 
 export default {
-  name: 'New',
+  name: 'EditCard',
   components: { BaseCard },
+  props: ['slug'],
   data() {
     return {
+      id: '',
       title: '',
       tags: '',
       md: '',
+      cover: null,
+      coverUrl: '',
       images: [],
     }
   },
@@ -102,10 +125,10 @@ export default {
   },
 
   methods: {
-    async createCard(publish) {
+    async updateCard(publish) {
       try {
         const formdata = new FormData()
-        formdata.append('cover', this.$refs.cover.files[0])
+        formdata.append('cover', this.cover)
         formdata.append('title', this.title)
         for (const tag of this.tags.split(/\s*(?:,|$)\s*/)) {
           formdata.append('tags[]', tag)
@@ -116,13 +139,16 @@ export default {
           formdata.append('images', image)
         }
 
-        const { data } = await api.post('api/v1/cards', formdata)
-        this.$router.push(`/${this.user.username}/${data.data.card.slug}`)
+        const { data } = await api.patch(`api/v1/cards/${this.id}`, formdata)
+        console.log(data)
+        this.$router.push(
+          `/${this.user.username}/${data.data.updatedCard.slug}`
+        )
       } catch (err) {
         this.$notify({
           group: 'app',
           type: 'error',
-          title: 'Card Creation',
+          title: 'Card Update',
           text: err.response.data.message,
         })
       }
@@ -151,11 +177,36 @@ export default {
     deleteImage(pos) {
       this.images.splice(pos - 1, 1)
     },
+
+    onPickFile() {
+      this.$refs.cover.click()
+    },
+    onFilePicked(event) {
+      const files = event.target.files
+      // let filename = files[0].name
+      const fileReader = new FileReader()
+      fileReader.addEventListener('load', (e) => {
+        this.coverUrl = e.target.result
+      })
+      fileReader.readAsDataURL(files[0])
+      this.cover = files[0]
+    },
+  },
+
+  async created() {
+    const { data } = await api.get(
+      `api/v1/cards?slug=${this.slug}&user=${this.user._id}`
+    )
+    this.id = data.data.cards[0]._id
+    this.title = data.data.cards[0].title
+    this.tags = data.data.cards[0].tags.join(', ')
+    this.md = data.data.cards[0].md
+    this.cover = data.data.cards[0].cover
   },
 
   metaInfo() {
     return {
-      title: 'New Card',
+      title: 'Edit Card',
       titleTemplate: '%s - CARDINO Community 🎴🎴',
       htmlAttrs: {
         lang: 'en',
@@ -165,4 +216,4 @@ export default {
 }
 </script>
 
-<style scoped></style>
+<style></style>

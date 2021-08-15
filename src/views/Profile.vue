@@ -91,8 +91,34 @@
               0 comments written
             </li>
           </base-card>
-          <main class="self-end space-y-4">
-            <Card v-for="card in userCards" :key="card._id" :card="card"></Card>
+          <main class="self-end flex-grow space-y-4">
+            <div
+              v-if="!userCards.length"
+              class="
+                flex flex-col
+                justify-center
+                space-y-3
+                bg-white
+                text-center
+                rounded-md
+              "
+              style="height: 60vh"
+            >
+              <p class="text-lg text-gray-500">
+                This is where you can see your card, but you haven't written
+                anything yet.
+              </p>
+              <router-link class="self-center" :to="{ name: 'New' }">
+                <base-button>Write your first card new</base-button>
+              </router-link>
+            </div>
+            <template v-else>
+              <Card
+                v-for="card in userCards"
+                :key="card._id"
+                :card="card"
+              ></Card>
+            </template>
           </main>
         </div>
       </div>

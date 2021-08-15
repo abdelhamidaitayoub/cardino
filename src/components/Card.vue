@@ -16,13 +16,15 @@
           <router-link
             class="text-sm font-normal text-gray-500"
             :to="`/${card.user.username}/${card.slug}`"
-            ><time datetime="">Jul 27 (16 hours ago)</time></router-link
+            ><time datetime=""
+              >{{ publishedAt }} ({{ publishedFromNow }})</time
+            ></router-link
           >
         </div>
       </div>
     </div>
     <div class="space-y-2 px-8">
-      <h3 class="text-gray-900 font-bold text-2xl group-hover:text-blue-500">
+      <h3 class="text-gray-900 font-bold text-2xl group-hover:text-blue-700">
         <router-link :to="`/${card.user.username}/${card.slug}`"
           ><span>{{ card.title }}</span></router-link
         >
@@ -65,10 +67,21 @@
 
 <script>
 import BaseCard from '../ui/BaseCard.vue'
+import moment from 'moment'
+
 export default {
   components: { BaseCard },
   name: 'Card',
   props: ['card'],
+  computed: {
+    publishedAt() {
+      return moment(this.card.publishedAt).format('ll')
+    },
+
+    publishedFromNow() {
+      return moment(this.card.publishedAt).fromNow()
+    },
+  },
 }
 </script>
 

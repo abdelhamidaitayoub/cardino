@@ -11,6 +11,7 @@
           rounded
           px-3
           py-2
+          cursor-pointer
         "
       >
         <router-link to="/" tag="div">Feed</router-link>
@@ -23,6 +24,7 @@
           rounded
           px-3
           py-2
+          cursor-pointer
         "
       >
         <router-link to="/top/week" tag="div">Week</router-link>
@@ -35,6 +37,7 @@
           rounded
           px-3
           py-2
+          cursor-pointer
         "
       >
         <router-link to="/top/month" tag="div">Month</router-link>
@@ -47,6 +50,7 @@
           rounded
           px-3
           py-2
+          cursor-pointer
         "
       >
         <router-link to="/top/year" tag="div">Year</router-link>
@@ -59,6 +63,7 @@
           rounded
           px-3
           py-2
+          cursor-pointer
         "
       >
         <router-link to="/latest" tag="div">Latest</router-link>

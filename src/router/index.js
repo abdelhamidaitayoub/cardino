@@ -19,7 +19,12 @@ import UserBasic from '../components/UserBasic.vue'
 import UpdatePassword from '../components/UpdatePassword.vue'
 import About from '../views/About.vue'
 import Contact from '../views/Contact.vue'
+import ManageCard from '../views/ManageCard.vue'
+import EditCard from '../views/EditCard.vue'
 import Faq from '../views/Faq.vue'
+import DashboardCards from '../components/DashboardCards.vue'
+import DashboardSuperTag from '../components/DashboardSuperTag.vue'
+import DashboardUsers from '../components/DashboardUsers.vue'
 
 Vue.use(VueRouter)
 
@@ -60,7 +65,25 @@ const routes = [
     path: '/dashboard',
     name: 'Dashboard',
     component: Dashboard,
+    redirect: { name: 'DashboardCards' },
     meta: { requiresAuth: true },
+    children: [
+      {
+        path: '',
+        name: 'DashboardCards',
+        component: DashboardCards,
+      },
+      {
+        path: '/superTag',
+        name: 'DashboardSuperTag',
+        component: DashboardSuperTag,
+      },
+      {
+        path: '/users',
+        name: 'DashboardUsers',
+        component: DashboardUsers,
+      },
+    ],
   },
   {
     path: '/faq',
@@ -134,6 +157,18 @@ const routes = [
     path: '/:username/:slug',
     name: 'CardDetails',
     component: CardDetails,
+    props: true,
+  },
+  {
+    path: '/:username/:slug/manage',
+    name: 'ManageCard',
+    component: ManageCard,
+    props: true,
+  },
+  {
+    path: '/:username/:slug/edit',
+    name: 'EditCard',
+    component: EditCard,
     props: true,
   },
   {
