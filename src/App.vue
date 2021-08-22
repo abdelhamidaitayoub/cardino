@@ -1,11 +1,17 @@
 <template>
-  <div class="bg-gray-100">
+  <div class="bg-gray-100 relative">
     <base-notifications
       group="app"
       position="center bottom"
       animation-type="velocity"
     ></base-notifications>
     <nav-bar></nav-bar>
+
+    <floating-button
+      v-if="authenticated && tagModerator"
+      class="fixed right-10"
+    />
+
     <router-view :key="$route.fullPath"></router-view>
   </div>
 </template>
@@ -13,11 +19,22 @@
 <script>
 import NavBar from '@/components/NavBar.vue'
 import BaseNotifications from './ui/BaseNotifications.vue'
+import FloatingButton from './components/FloatingButton.vue'
 export default {
   name: 'App',
   components: {
     NavBar,
     BaseNotifications,
+    FloatingButton,
+  },
+
+  computed: {
+    tagModerator() {
+      return this.$store.getters.tagModerator
+    },
+    authenticated() {
+      return this.$store.getters.authenticated
+    },
   },
 
   created() {
