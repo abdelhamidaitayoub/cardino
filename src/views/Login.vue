@@ -73,7 +73,7 @@ export default {
   },
   data() {
     return {
-      email: 'abdelhamidaitayoub@gmail.com',
+      email: 'abdelhamidaitayoub@admin.com',
       password: 'pass1234',
       rememberme: false,
     }
