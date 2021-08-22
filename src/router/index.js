@@ -163,12 +163,14 @@ const routes = [
     path: '/:username/:slug/manage',
     name: 'ManageCard',
     component: ManageCard,
+    meta: { requiresAuth: true },
     props: true,
   },
   {
     path: '/:username/:slug/edit',
     name: 'EditCard',
     component: EditCard,
+    meta: { requiresAuth: true },
     props: true,
   },
   {
