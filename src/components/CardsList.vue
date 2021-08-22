@@ -27,7 +27,7 @@ export default {
         .get('api/v1/cards', {
           params: {
             page: this.page,
-            limit: 20,
+            limit: 10,
           },
         })
         .then(({ data }) => {
